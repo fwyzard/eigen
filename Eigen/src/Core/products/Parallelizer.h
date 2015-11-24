@@ -17,12 +17,16 @@ namespace internal {
 /** \internal */
 inline void manage_multi_threading(Action action, int* v)
 {
+  #ifdef EIGEN_HAS_OPENMP
   static EIGEN_UNUSED int m_maxThreads = -1;
+  #endif
 
   if(action==SetAction)
   {
     eigen_internal_assert(v!=0);
+    #ifdef EIGEN_HAS_OPENMP
     m_maxThreads = *v;
+    #endif
   }
   else if(action==GetAction)
   {
